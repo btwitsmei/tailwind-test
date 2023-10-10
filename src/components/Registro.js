@@ -1,34 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setFormData, setMessage, clearFormData } from "./userSlide";
 
 function Registro() {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-    });
-
-    const [message, setMessage] = useState("");
+    const dispatch = useDispatch();
+    const formData = useSelector((state) => state.user);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+        dispatch(setFormData({[name]: value}))
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(clearFormData());
         console.log("data del formulario:", formData);
-
-        setMessage(`${formData.name}, te has registrado 𓆝 𓆟 𓆞 𓆝`);
-
-        //limpiar el form
-        setFormData({
-            name: "",
-            email: "",
-            password: "",
-        });
+        const messageText = `${formData.name}, te has registrado 𓆝 𓆟 𓆞 𓆝`;
+        dispatch(setMessage(messageText));
     };
 
     return (
@@ -89,9 +77,9 @@ function Registro() {
                 </div>
             </form>
 
-            {message && (
+            {formData.message && (
                 <div className="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-tl-lg rounded-br-lg relative">
-                    {message}
+                    {formData.message}
                 </div>
             )}
         </div>
