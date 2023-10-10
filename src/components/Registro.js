@@ -8,15 +8,15 @@ function Registro() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        dispatch(setFormData({[name]: value}))
+        dispatch(setFormData({ [name]: value }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(clearFormData());
-        console.log("data del formulario:", formData);
         const messageText = `${formData.name}, te has registrado 𓆝 𓆟 𓆞 𓆝`;
         dispatch(setMessage(messageText));
+        console.log("data del formulario:", formData);
     };
 
     return (
